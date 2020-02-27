@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AsignarcursoCreateDlg" widgetVar="AsignarcursoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateAsignarcursoTitle}">
+            <h:form id="AsignarcursoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{asignarcursoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateAsignarcursoLabel_idAsignacion}" for="idAsignacion" />
+                        <p:inputText id="idAsignacion" value="#{asignarcursoController.selected.idAsignacion}" title="#{bundle.CreateAsignarcursoTitle_idAsignacion}" required="true" requiredMessage="#{bundle.CreateAsignarcursoRequiredMessage_idAsignacion}"/>
+                        <p:outputLabel value="#{bundle.CreateAsignarcursoLabel_cursoIdCurso}" for="cursoIdCurso" />
+                        <p:selectOneMenu id="cursoIdCurso" value="#{asignarcursoController.selected.cursoIdCurso}" required="true" requiredMessage="#{bundle.EditAsignarcursoRequiredMessage_cursoIdCurso}">
+                            <f:selectItems value="#{cursoController.itemsAvailableSelectOne}"
+                                           var="cursoIdCursoItem"
+                                           itemValue="#{cursoIdCursoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateAsignarcursoLabel_inscripcionIdInscripcion}" for="inscripcionIdInscripcion" />
+                        <p:selectOneMenu id="inscripcionIdInscripcion" value="#{asignarcursoController.selected.inscripcionIdInscripcion}" required="true" requiredMessage="#{bundle.EditAsignarcursoRequiredMessage_inscripcionIdInscripcion}">
+                            <f:selectItems value="#{inscripcionController.itemsAvailableSelectOne}"
+                                           var="inscripcionIdInscripcionItem"
+                                           itemValue="#{inscripcionIdInscripcionItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{asignarcursoController.create}" value="#{bundle.Save}" update="display,:AsignarcursoListForm:datalist,:growl" oncomplete="handleSubmit(args,'AsignarcursoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="AsignarcursoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
